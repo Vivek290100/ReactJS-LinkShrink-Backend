@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 interface SignupProps {
   onSignup: () => void;
   onSwitchToLogin: () => void;
-}
+} 
 
 const Signup: React.FC<SignupProps> = ({ onSignup }) => {
   const [username, setUsername] = useState('');
