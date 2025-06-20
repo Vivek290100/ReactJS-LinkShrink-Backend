@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 interface HomeProps {
   onLogout: () => void;
 }
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 const Home: React.FC<HomeProps> = ({ onLogout }) => {
   const [originalUrl, setOriginalUrl] = useState('');
@@ -63,16 +64,19 @@ const Home: React.FC<HomeProps> = ({ onLogout }) => {
     }
   };
 
-  const copyToClipboard = async (shortCode: string, index: number) => {
-    const shortUrl = `http://localhost:3000/url/${shortCode}`;
-    try {
-      await navigator.clipboard.writeText(shortUrl);
-      setCopiedIndex(index);
-      setTimeout(() => setCopiedIndex(null), 2000);
-    } catch (err) {
-      console.error('Failed to copy:', err);
-    }
-  };
+const copyToClipboard = async (shortCode: string, index: number) => {
+  const baseUrl = import.meta.env.VITE_API_BASE_URL;
+  const shortUrl = `${baseUrl}/url/${shortCode}`;
+  
+  try {
+    await navigator.clipboard.writeText(shortUrl);
+    setCopiedIndex(index);
+    setTimeout(() => setCopiedIndex(null), 2000);
+  } catch (err) {
+    console.error('Failed to copy:', err);
+  }
+};
+
 
   const handleLogout = async () => {
     await api.logout();
@@ -146,7 +150,7 @@ const Home: React.FC<HomeProps> = ({ onLogout }) => {
                         <p className="text-sm text-gray-600 mb-1">Short URL:</p>
                         <div className="flex items-center space-x-2">
                           <code className="bg-gray-100 px-3 py-1 rounded text-indigo-600 font-mono text-sm">
-                            {`${import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000'}/url/${url.shortCode}`}
+                            {`${API_BASE_URL}/url/${url.shortCode}`}
                           </code>
                           <button
                             onClick={() => copyToClipboard(url.shortCode, index)}

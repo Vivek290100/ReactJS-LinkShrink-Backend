@@ -1,7 +1,7 @@
 import type { ShortenedUrl } from "../types";
 
 class ApiService {
-private baseUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000';
+private baseUrl = import.meta.env.VITE_API_BASE_URL;
   private getHeaders() {
     const headers: Record<string, string> = {
       'Content-Type': 'application/json',

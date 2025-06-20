@@ -9,17 +9,20 @@ const App: React.FC = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    fetch('http://localhost:3000/auth/check', {
-      method: 'GET',
-      credentials: 'include',
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
+useEffect(() => {
+  fetch(`${API_BASE_URL}/auth/check`, {
+    method: 'GET',
+    credentials: 'include',
+  })
+    .then((res) => {
+      setIsAuthenticated(res.ok);
+      setLoading(false);
     })
-      .then((res) => {
-        setIsAuthenticated(res.ok);
-        setLoading(false);
-      })
-      .catch(() => setLoading(false));
-  }, []);
+    .catch(() => setLoading(false));
+}, []);
+
 
   const handleLogin = () => {
     setIsAuthenticated(true);
