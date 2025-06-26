@@ -12,7 +12,7 @@ const App: React.FC = () => {
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 useEffect(() => {
-  fetch(`${API_BASE_URL}/auth/check`, {
+  fetch(`${API_BASE_URL}/auth/health`, {
     method: 'GET',
     credentials: 'include',
   })
